@@ -33,8 +33,8 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHol
     public void onBindViewHolder(@NonNull ChartViewHolder chartViewHolder, int i) {
         String positionNumber = String.format(Locale.getDefault(), "%02d.", dataList.get(i).getPosition());
         int songDuration = dataList.get(i).getDuration();
-        int minuteDuration = songDuration/100;
-        int secondDuration = songDuration%100;
+        int minuteDuration = songDuration/60;
+        int secondDuration = songDuration%60;
         String duration = String.format(Locale.getDefault(), "%02d:%02d", minuteDuration, secondDuration);
 
         chartViewHolder.numberId.setText(positionNumber);

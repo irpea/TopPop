@@ -19,6 +19,8 @@ import com.clover.irpea.toppop.network.DeezerService;
 import com.clover.irpea.toppop.network.RetrofitInstance;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,7 +82,34 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     private void sortChart(int no) {
-        
+        if(no == 1){
+            Collections.sort(chartArrayList, new Comparator<Chart>() {
+                @Override
+                public int compare(Chart o1, Chart o2) {
+                    return (o1.getDuration() > o2.getDuration()) ? -1: (o1.getDuration() < o2.getDuration()) ? 1:0;
+                }
+            });
+            generateChart(chartArrayList);
+        }
+        if(no == 2){
+            Collections.sort(chartArrayList, new Comparator<Chart>() {
+                @Override
+                public int compare(Chart o1, Chart o2) {
+                    return (o1.getPosition() < o2.getPosition()) ? -1: (o1.getPosition() > o2.getPosition()) ? 1:0;
+                }
+            });
+            generateChart(chartArrayList);
+        }
+        if(no == 3){
+            Collections.sort(chartArrayList, new Comparator<Chart>() {
+                @Override
+                public int compare(Chart o1, Chart o2) {
+                    return (o1.getDuration() < o2.getDuration()) ? -1: (o1.getDuration() > o2.getDuration()) ? 1:0;
+
+                }
+            });
+            generateChart(chartArrayList);
+        }
     }
 
     private void getRetrofitData() {
