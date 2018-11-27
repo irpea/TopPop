@@ -1,27 +1,24 @@
 package com.clover.irpea.toppop.activity;
 
-import android.content.Context;
-import android.content.Intent;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.clover.irpea.toppop.R;
-import com.clover.irpea.toppop.adapter.ChartAdapter;
-import com.clover.irpea.toppop.modelchart.Album;
-import com.clover.irpea.toppop.modelchart.Chart;
-import com.clover.irpea.toppop.modelchart.ChartList;
+import com.clover.irpea.toppop.modelalbum.Album_;
+import com.clover.irpea.toppop.modelalbum.Contributor;
+import com.clover.irpea.toppop.modelalbum.Data;
+import com.clover.irpea.toppop.modelalbum.Tracks;
 import com.clover.irpea.toppop.network.DeezerService;
 import com.clover.irpea.toppop.network.RetrofitInstance;
+import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,8 +31,11 @@ public class TrackActivity extends AppCompatActivity {
     private ImageView coverImage;
     private TextView tracklist;
 
+    private Album_ album;
+
     private Picasso picasso;
     private int albumId = 0;
+    private String trackName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,33 +48,61 @@ public class TrackActivity extends AppCompatActivity {
             Bundle extra = getIntent().getExtras();
             if(extra == null){
                 albumId = 0;
+                trackName = null;
             } else {
                 albumId = extra.getInt("albumId");
+                trackName = extra.getString("songName");
             }
-        } else {
-            albumId = (int) savedInstanceState.getSerializable("albumId");
         }
 
-//        //Handle for retrofit
-//        DeezerService service = RetrofitInstance.getRetrofitInstance().
-//                create(DeezerService.class);
-//
-//        //call method in the interface to get chart data
-//        Call<Album> call = service.getAlbumData();
-//        Log.wtf("URL called", call.request().url() + "");
-//
-//        call.enqueue(new Callback<ChartList>() {
-//            @Override
-//            public void onResponse(Call<ChartList> call, Response<ChartList> response) {
-//                chartArrayList = response.body().getData();
-//                generateChart(chartArrayList);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ChartList> call, Throwable t) {
-//                Toast.makeText(ChartActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        //Handle for retrofit
+        DeezerService service = RetrofitInstance.getRetrofitInstance().
+                create(DeezerService.class);
+
+        //call method in the interface to get chart data
+        Call<Album_> call = service.getAlbumData(albumId + "");
+        Log.wtf("URL called", call.request().url() + "");
+
+        call.enqueue(new Callback<Album_>() {
+            @Override
+            public void onResponse(Call<Album_> call, Response<Album_> response) {
+                album = response.body();
+                generateAlbum(album);
+            }
+
+            @Override
+            public void onFailure(Call<Album_> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void generateAlbum(Album_ album) {
+        songName.setText(trackName);
+        artistName.setText(album.getContributors().get(0).getName());
+        albumName.setText(album.getTitle());
+
+        picasso = new Picasso.Builder(this)
+                .downloader(new OkHttp3Downloader(new OkHttpClient()))
+                .build();
+
+        picasso.load(album.getCover())
+                .into(coverImage);
+
+        ArrayList<Data> tracks = album.getTracks().getData();
+        StringBuilder albumSongs = new StringBuilder();
+        int i=1;
+
+        for(Data data : tracks){
+            if(i < tracks.size()) {
+                albumSongs.append(data.getTitle() + ", ");
+                i++;
+            } else if(i == tracks.size()){
+                albumSongs.append(data.getTitle());
+            }
+        }
+        tracklist.setText(albumSongs.toString());
+
     }
 
     private void initWidgets() {

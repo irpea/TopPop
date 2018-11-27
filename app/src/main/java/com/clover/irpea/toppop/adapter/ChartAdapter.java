@@ -81,6 +81,7 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHol
 
             Intent intent = new Intent(activity, TrackActivity.class);
             intent.putExtra("albumId", dataList.get(itemPosition).getAlbum().getId());
+            intent.putExtra("songName", dataList.get(itemPosition).getTitle());
             activity.startActivity(intent);
         }
     }

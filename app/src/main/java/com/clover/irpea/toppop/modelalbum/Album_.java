@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Album {
+public class Album_ {
 
     @SerializedName("id")
     @Expose
@@ -13,9 +13,9 @@ public class Album {
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("cover")
+    @SerializedName("cover_big")
     @Expose
-    private String cover;
+    private String cover_big;
     @SerializedName("contributors")
     @Expose
     private List<Contributor> contributors;
@@ -23,10 +23,10 @@ public class Album {
     @Expose
     private Tracks tracks;
 
-    public Album(int id, String title, String cover, List<Contributor> contributors, Tracks tracks) {
+    public Album_(int id, String title, String cover_big, List<Contributor> contributors, Tracks tracks) {
         this.id = id;
         this.title = title;
-        this.cover = cover;
+        this.cover_big = cover_big;
         this.contributors = contributors;
         this.tracks = tracks;
     }
@@ -48,11 +48,11 @@ public class Album {
     }
 
     public String getCover() {
-        return cover;
+        return cover_big;
     }
 
     public void setCover(String cover) {
-        this.cover = cover;
+        this.cover_big = cover;
     }
 
     public List<Contributor> getContributors() {

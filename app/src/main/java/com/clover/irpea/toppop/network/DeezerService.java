@@ -1,6 +1,6 @@
 package com.clover.irpea.toppop.network;
 
-import com.clover.irpea.toppop.modelchart.Album;
+import com.clover.irpea.toppop.modelalbum.Album_;
 import com.clover.irpea.toppop.modelchart.ChartList;
 
 import retrofit2.Call;
@@ -12,5 +12,5 @@ public interface DeezerService {
     Call<ChartList> getChartList();
 
     @GET("album/{album_id}")
-    Call<Album> getAlbumData(@Path("album_id") String id);
+    Call<Album_> getAlbumData(@Path("album_id") String id);
 }
