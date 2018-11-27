@@ -70,7 +70,9 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHol
             itemView.setOnClickListener(this);
             numberId = itemView.findViewById(R.id.numberId);
             songName = itemView.findViewById(R.id.song_name);
+            songName.setSelected(true);
             artistName = itemView.findViewById(R.id.artist_name);
+            artistName.setSelected(true);
             songDuration = itemView.findViewById(R.id.song_duration);
         }
 

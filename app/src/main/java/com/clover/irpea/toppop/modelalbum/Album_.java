@@ -1,7 +1,7 @@
 package com.clover.irpea.toppop.modelalbum;
 
 
-import java.util.List;
+import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,20 +13,20 @@ public class Album_ {
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("cover_big")
+    @SerializedName("cover_xl")
     @Expose
-    private String cover_big;
+    private String cover_xl;
     @SerializedName("contributors")
     @Expose
-    private List<Contributor> contributors;
+    private ArrayList<Contributor> contributors;
     @SerializedName("tracks")
     @Expose
     private Tracks tracks;
 
-    public Album_(int id, String title, String cover_big, List<Contributor> contributors, Tracks tracks) {
+    public Album_(int id, String title, String cover_xl, ArrayList<Contributor> contributors, Tracks tracks) {
         this.id = id;
         this.title = title;
-        this.cover_big = cover_big;
+        this.cover_xl = cover_xl;
         this.contributors = contributors;
         this.tracks = tracks;
     }
@@ -48,18 +48,18 @@ public class Album_ {
     }
 
     public String getCover() {
-        return cover_big;
+        return cover_xl;
     }
 
     public void setCover(String cover) {
-        this.cover_big = cover;
+        this.cover_xl = cover;
     }
 
-    public List<Contributor> getContributors() {
+    public ArrayList<Contributor> getContributors() {
         return contributors;
     }
 
-    public void setContributors(List<Contributor> contributors) {
+    public void setContributors(ArrayList<Contributor> contributors) {
         this.contributors = contributors;
     }
 

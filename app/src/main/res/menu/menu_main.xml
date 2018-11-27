@@ -4,8 +4,14 @@
     xmlns:android1="http://schemas.android.com/apk/res/android">
 
     <item
+        android1:id="@+id/logo_menu"
+        android1:icon="@drawable/logow"
+        android:title="@string/logo_menu"
+        app:showAsAction="always"/>
+
+    <item
         android1:id="@+id/dots_menu"
-        android1:icon="@drawable/dots"
+        android1:icon="@drawable/dotsw"
         android1:title="@string/menu_dots"
         app:showAsAction="always">
         <menu>

@@ -3,14 +3,14 @@ package com.clover.irpea.toppop.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.clover.irpea.toppop.R;
 import com.clover.irpea.toppop.modelalbum.Album_;
-import com.clover.irpea.toppop.modelalbum.Contributor;
 import com.clover.irpea.toppop.modelalbum.Data;
-import com.clover.irpea.toppop.modelalbum.Tracks;
+import com.clover.irpea.toppop.modelchart.Album;
 import com.clover.irpea.toppop.network.DeezerService;
 import com.clover.irpea.toppop.network.RetrofitInstance;
 import com.squareup.picasso.OkHttp3Downloader;
@@ -79,8 +79,16 @@ public class TrackActivity extends AppCompatActivity {
 
     private void generateAlbum(Album_ album) {
         songName.setText(trackName);
-        artistName.setText(album.getContributors().get(0).getName());
-        albumName.setText(album.getTitle());
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<album.getContributors().size(); i++){
+            if(i < album.getContributors().size()-1) {
+                sb.append(album.getContributors().get(i).getName() + ", ");
+            } else if(i <= (album.getContributors().size()-1)){
+                sb.append(album.getContributors().get(i).getName());
+            }
+        }
+        artistName.setText(sb.toString());
+        albumName.setText("Album: " +  album.getTitle());
 
         picasso = new Picasso.Builder(this)
                 .downloader(new OkHttp3Downloader(new OkHttpClient()))
@@ -99,17 +107,20 @@ public class TrackActivity extends AppCompatActivity {
                 i++;
             } else if(i == tracks.size()){
                 albumSongs.append(data.getTitle());
+
             }
         }
-        tracklist.setText(albumSongs.toString());
+        tracklist.setText("List of songs from the album: " + albumSongs.toString());
 
     }
 
     private void initWidgets() {
         songName = findViewById(R.id.track_name);
         artistName = findViewById(R.id.artist_track_name);
+        artistName.setSelected(true);
         albumName = findViewById(R.id.album_track_name);
         coverImage = findViewById(R.id.cover_img);
         tracklist = findViewById(R.id.tracklist);
+        tracklist.setMovementMethod(new ScrollingMovementMethod());
     }
 }
