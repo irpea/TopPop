@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.clover.irpea.toppop.R;
@@ -26,6 +29,8 @@ public class ChartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ChartAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private ArrayList<Chart> chartArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,33 @@ public class ChartActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sort_asc:
+                sortChart(1);
+                break;
+            case R.id.sort_normal:
+                sortChart(2);
+                break;
+            case R.id.sort_dsc:
+                sortChart(3);
+                break;
+        }        
+        return true;
+    }
+
+    private void sortChart(int no) {
+        
     }
 
     private void getRetrofitData() {
@@ -64,7 +95,8 @@ public class ChartActivity extends AppCompatActivity {
         call.enqueue(new Callback<ChartList>() {
             @Override
             public void onResponse(Call<ChartList> call, Response<ChartList> response) {
-                    generateChart(response.body().getData());
+                chartArrayList = response.body().getData();
+                generateChart(chartArrayList);
             }
 
             @Override

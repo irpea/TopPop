@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Top Pop</string>
+    <string name="menu_dots">Menu</string>
+    <string name="sort_normal">normal</string>
+    <string name="sort_asc">sort asc</string>
+    <string name="sort_dsc">sort dsc</string>
 </resources>
