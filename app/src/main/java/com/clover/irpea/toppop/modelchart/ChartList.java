@@ -1,4 +1,4 @@
-package com.clover.irpea.toppop.model;
+package com.clover.irpea.toppop.modelchart;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

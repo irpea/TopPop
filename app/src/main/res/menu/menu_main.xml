@@ -17,7 +17,7 @@
 
             <item
                 android:id="@+id/sort_normal"
-                android:icon="@drawable/up"
+                android:icon="@drawable/normal"
                 android:title="@string/sort_normal"
                 app:showAsAction="always"/>
             <item

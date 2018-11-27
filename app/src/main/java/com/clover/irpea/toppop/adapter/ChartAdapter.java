@@ -1,5 +1,8 @@
 package com.clover.irpea.toppop.adapter;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,17 +12,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.clover.irpea.toppop.R;
-import com.clover.irpea.toppop.model.Chart;
+import com.clover.irpea.toppop.activity.ChartActivity;
+import com.clover.irpea.toppop.activity.TrackActivity;
+import com.clover.irpea.toppop.modelchart.Chart;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHolder> {
 
+    private RecyclerView recyclerView;
+    private Activity activity;
     private ArrayList<Chart> dataList;
 
-    public ChartAdapter(ArrayList<Chart> dataList) {
+    public ChartAdapter(Activity activity, ArrayList<Chart> dataList, RecyclerView rv) {
+        this.activity = activity;
         this.dataList = dataList;
+        this.recyclerView = rv;
     }
 
     @NonNull
@@ -49,7 +58,7 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHol
             return dataList.size();
     }
 
-    class ChartViewHolder extends RecyclerView.ViewHolder{
+    class ChartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView numberId;
         private TextView songName;
@@ -58,10 +67,44 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHol
 
         ChartViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             numberId = itemView.findViewById(R.id.numberId);
             songName = itemView.findViewById(R.id.song_name);
             artistName = itemView.findViewById(R.id.artist_name);
             songDuration = itemView.findViewById(R.id.song_duration);
         }
+
+        @Override
+        public void onClick(View v) {
+            int itemPosition = 0;
+            itemPosition = recyclerView.getChildLayoutPosition(v);
+
+            Intent intent = new Intent(activity, TrackActivity.class);
+            intent.putExtra("albumId", dataList.get(itemPosition).getAlbum().getId());
+            activity.startActivity(intent);
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,15 +1,16 @@
-package com.clover.irpea.toppop.model;
+package com.clover.irpea.toppop.modelalbum;
+
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Artist {
+public class Contributor {
 
     @SerializedName("name")
     @Expose
     private String name;
 
-    public Artist(String name) {
+    public Contributor(String name) {
         this.name = name;
     }
 

@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.clover.irpea.toppop.R;
 import com.clover.irpea.toppop.adapter.ChartAdapter;
-import com.clover.irpea.toppop.model.Chart;
-import com.clover.irpea.toppop.model.ChartList;
+import com.clover.irpea.toppop.modelchart.Chart;
+import com.clover.irpea.toppop.modelchart.ChartList;
 import com.clover.irpea.toppop.network.DeezerService;
 import com.clover.irpea.toppop.network.RetrofitInstance;
 
@@ -137,10 +137,9 @@ public class ChartActivity extends AppCompatActivity {
 
     private void generateChart(ArrayList<Chart> data) {
         recyclerView = findViewById(R.id.chart_recycle_view);
-        adapter = new ChartAdapter(data);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ChartActivity.this);
         recyclerView.setLayoutManager(layoutManager);
+        adapter = new ChartAdapter(ChartActivity.this, data, recyclerView);
         recyclerView.setAdapter(adapter);
     }
 }
